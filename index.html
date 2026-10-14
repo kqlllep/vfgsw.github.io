@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWAG VPN — бесплатный впн от @VFGsupport</title>
+<meta name="description" content="Бесплатный VPN от @VFGsupport и @svagoff_unofficial. VLESS, VMess, Trojan, SS, Hysteria2. Подписки с обновлением каждый день.">
+<style>
+  :root{
+    --bg:#07080a;
+    --panel:#101216;
+    --line:#1f2329;
+    --txt:#e8eaee;
+    --dim:#8a919d;
+    --acc:#a855f7;
+    --acc2:#ec4899;
+    --acc3:#22d3ee;
+    --ok:#4ade80;
+    --warn:#facc15;
+    --err:#ef4444;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(7,8,10,.84);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:17px;display:flex;align-items:center;gap:9px}
+  .logo-mark{
+    width:26px;height:26px;border-radius:7px;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    box-shadow:0 0 18px rgba(168,85,247,.5);
+    display:inline-flex;align-items:center;justify-content:center;font-size:14px;color:#fff;
+  }
+  .logo b{background:linear-gradient(135deg,var(--acc),var(--acc2),var(--acc3));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .nav-links{display:flex;gap:24px;font-size:14px}
+  .nav-links a{color:var(--dim);text-decoration:none;transition:color .2s}
+  .nav-links a:hover{color:var(--txt)}
+  .btn{
+    display:inline-block;padding:11px 22px;border-radius:9px;
+    font-weight:600;font-size:14px;text-decoration:none;
+    transition:transform .15s,box-shadow .2s,border-color .2s,background .2s,color .2s;
+    cursor:pointer;border:none;text-align:center;font-family:inherit;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    color:#fff;box-shadow:0 6px 26px rgba(168,85,247,.35);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(168,85,247,.55)}
+  .btn-ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+  .btn-sm{padding:8px 16px;font-size:13px}
+  .btn.copied{
+    background:rgba(74,222,128,.15) !important;
+    border-color:var(--ok) !important;
+    color:var(--ok) !important;
+  }
+
+  header{padding:96px 0 72px;position:relative;overflow:hidden}
+  header::before{
+    content:"";position:absolute;top:-260px;left:50%;transform:translateX(-50%);
+    width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle,rgba(168,85,247,.16) 0%,transparent 62%);
+    pointer-events:none;
+  }
+  .hero{position:relative;text-align:center;max-width:760px;margin:0 auto}
+  .tag{
+    display:inline-block;padding:6px 14px;border-radius:100px;
+    background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);
+    color:#c4b5fd;font-size:12px;font-weight:600;letter-spacing:.6px;margin-bottom:26px;
+  }
+  h1{font-size:clamp(32px,5vw,56px);line-height:1.08;font-weight:800;letter-spacing:-1.2px}
+  h1 .grad{
+    background:linear-gradient(135deg,var(--acc),var(--acc2),var(--acc3));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  header p.lead{color:var(--dim);font-size:17px;margin:24px auto 36px;max-width:560px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .stats{display:flex;gap:36px;margin-top:52px;flex-wrap:wrap;justify-content:center}
+  .stat b{display:block;font-size:26px;font-weight:800;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .stat span{font-size:13px;color:var(--dim)}
+
+  section{padding:88px 0}
+  .sec-head{text-align:center;margin-bottom:56px}
+  h2{font-size:clamp(26px,3.4vw,36px);font-weight:800;letter-spacing:-.6px}
+  .sec-head p{color:var(--dim);margin-top:14px;max-width:580px;margin-inline:auto}
+
+  .proto-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;
+  }
+  .proto{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:22px 20px;text-align:center;transition:border-color .2s,transform .2s;
+  }
+  .proto:hover{border-color:rgba(168,85,247,.5);transform:translateY(-3px)}
+  .proto .p-name{
+    font-family:ui-monospace,monospace;font-weight:700;font-size:16px;
+    letter-spacing:.5px;margin-bottom:8px;
+    background:linear-gradient(135deg,var(--acc),var(--acc3));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .proto .p-desc{font-size:12px;color:var(--dim)}
+
+  .subs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px}
+  .sub-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:28px;display:flex;flex-direction:column;gap:16px;
+    transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
+  }
+  .sub-card:hover{border-color:rgba(168,85,247,.5);transform:translateY(-4px)}
+  .sub-card::after{
+    content:"";position:absolute;top:-80px;right:-80px;width:220px;height:220px;
+    border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.12),transparent 65%);
+    pointer-events:none;
+  }
+  .sub-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative}
+  .sub-title{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .sub-id{
+    font-family:ui-monospace,monospace;font-size:12px;color:var(--dim);
+    margin-top:4px;word-break:break-all;
+  }
+  .sub-badge{
+    display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+    font-size:11px;font-weight:700;letter-spacing:.6px;
+    padding:5px 11px;border-radius:100px;
+    background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);
+    color:var(--ok);font-family:ui-monospace,monospace;
+  }
+  .sub-badge .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--ok);
+    box-shadow:0 0 8px var(--ok);animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  .sub-desc{color:var(--dim);font-size:14px;position:relative}
+
+  .sub-url{
+    background:var(--bg);border:1px solid var(--line);border-radius:8px;
+    padding:12px 14px;font-family:ui-monospace,monospace;font-size:12px;
+    color:var(--acc3);word-break:break-all;position:relative;
+  }
+  .sub-actions{display:flex;gap:9px;flex-wrap:wrap;position:relative}
+  .sub-actions .btn{flex:1;min-width:120px}
+
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .feat{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:28px;transition:border-color .2s,transform .2s;
+  }
+  .feat:hover{border-color:rgba(168,85,247,.45);transform:translateY(-4px)}
+  .feat .ico{
+    width:46px;height:46px;border-radius:11px;display:flex;align-items:center;
+    justify-content:center;font-size:22px;margin-bottom:18px;
+    background:rgba(168,85,247,.11);border:1px solid rgba(168,85,247,.28);
+  }
+  .feat h3{font-size:18px;margin-bottom:10px;font-weight:700}
+  .feat p{color:var(--dim);font-size:14px}
+
+  .links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .link-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:26px;display:flex;flex-direction:column;gap:14px;
+    transition:border-color .2s,transform .2s;
+  }
+  .link-card:hover{border-color:rgba(168,85,247,.5);transform:translateY(-4px)}
+  .link-card .lc-head{display:flex;align-items:center;gap:12px}
+  .link-card .lc-ico{
+    width:42px;height:42px;border-radius:11px;display:flex;align-items:center;
+    justify-content:center;font-size:20px;
+    background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.28);
+  }
+  .link-card h3{font-size:16px;font-weight:700}
+  .link-card p{color:var(--dim);font-size:13px;flex:1}
+  .link-card .btn{width:100%}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .step{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:26px;transition:border-color .2s;
+  }
+  .step:hover{border-color:rgba(168,85,247,.4)}
+  .step .num{
+    font-size:12px;font-weight:800;letter-spacing:1px;color:var(--acc);
+    font-family:ui-monospace,monospace;margin-bottom:12px;
+  }
+  .step h3{font-size:16px;margin-bottom:14px;font-weight:700;
+    display:flex;align-items:center;gap:8px}
+  .step h3 .plat{
+    font-size:10px;font-weight:600;color:var(--dim);letter-spacing:.5px;
+    background:var(--bg);border:1px solid var(--line);padding:3px 8px;border-radius:5px;
+  }
+  .step ol{list-style:none;counter-reset:s}
+  .step ol li{
+    counter-increment:s;font-size:13px;color:var(--dim);
+    padding:7px 0 7px 30px;position:relative;line-height:1.5;
+  }
+  .step ol li::before{
+    content:counter(s);position:absolute;left:0;top:7px;
+    width:20px;height:20px;border-radius:50%;
+    background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.3);
+    color:var(--acc);font-size:11px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    font-family:ui-monospace,monospace;
+  }
+  .step .warn{
+    font-size:12px;color:var(--warn);margin-top:12px;
+    padding:10px 12px;background:rgba(250,204,21,.06);
+    border:1px solid rgba(250,204,21,.2);border-radius:8px;
+  }
+
+  .faq{max-width:760px;margin:0 auto}
+  details{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    margin-bottom:12px;overflow:hidden;
+  }
+  details[open]{border-color:rgba(168,85,247,.4)}
+  summary{
+    padding:20px 24px;font-weight:600;cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;font-size:15px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:20px;color:var(--acc);transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{padding:0 24px 22px;color:var(--dim);font-size:14px}
+
+  .strip{
+    text-align:center;background:var(--panel);border:1px solid var(--line);
+    border-radius:20px;padding:60px 32px;position:relative;overflow:hidden;
+  }
+  .strip::before{
+    content:"";position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+    width:640px;height:640px;border-radius:50%;
+    background:radial-gradient(circle,rgba(168,85,247,.18),transparent 64%);
+  }
+  .strip h2,.strip p,.strip .btn{position:relative}
+  .strip p{color:var(--dim);margin:18px auto 32px;max-width:480px}
+
+  footer{border-top:1px solid var(--line);padding:52px 0 32px;color:var(--dim);font-size:14px}
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px}
+  .foot-col h4{color:var(--txt);font-size:13px;letter-spacing:.6px;margin-bottom:14px}
+  .foot-col a{display:block;color:var(--dim);text-decoration:none;padding:5px 0;font-size:14px}
+  .foot-col a:hover{color:var(--acc)}
+  .foot-bottom{
+    margin-top:40px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-size:13px;font-family:ui-monospace,monospace;
+  }
+
+  @media(max-width:820px){
+    .nav-links{display:none}
+    header{padding:64px 0 48px}
+    section{padding:64px 0}
+    .stats{gap:26px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo">
+      <span class="logo-mark">⚡</span>
+      <span>SWAG <b>VPN</b></span>
+    </div>
+    <div class="nav-links">
+      <a href="#subs">Подписки</a>
+      <a href="#protocols">Протоколы</a>
+      <a href="#channels">Каналы</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#subs" class="btn btn-primary btn-sm">Забрать</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap hero">
+    <div class="tag">● БЕСПЛАТНО · ОБНОВЛЕНИЕ КАЖДЫЙ ДЕНЬ</div>
+    <h1>Бесплатный впн от <span class="grad">@VFGsupport</span></h1>
+    <p class="lead">
+      VLESS, VMess, Trojan, SS, Hysteria2. Маленький пинг, быстрые ключи,
+      подписки обновляются каждый день. Никаких оплат, никаких логов.
+    </p>
+    <div class="cta-row">
+      <a href="#subs" class="btn btn-primary">Получить подписку</a>
+      <a href="#channels" class="btn btn-ghost">Наши каналы</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>Daily</b><span>обновление</span></div>
+      <div class="stat"><b>5</b><span>протоколов</span></div>
+      <div class="stat"><b>900+</b><span>серверов</span></div>
+      <div class="stat"><b>0₽</b><span>навсегда</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="protocols" style="background:var(--panel);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Поддерживаемые протоколы</h2>
+      <p>Все современные протоколы в одной подписке.</p>
+    </div>
+    <div class="proto-grid">
+      <div class="proto"><div class="p-name">VLESS</div><div class="p-desc">Лёгкий, быстрый, без лишнего</div></div>
+      <div class="proto"><div class="p-name">VMess</div><div class="p-desc">Классика V2Ray</div></div>
+      <div class="proto"><div class="p-name">Trojan</div><div class="p-desc">Маскировка под HTTPS</div></div>
+      <div class="proto"><div class="p-name">SS</div><div class="p-desc">Shadowsocks, проверенный</div></div>
+      <div class="proto"><div class="p-name">Hysteria2</div><div class="p-desc">Максимальная скорость</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="subs">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Активные подписки</h2>
+      <p>Копируй ссылку — вставляй в клиент. Обновляются автоматически.</p>
+    </div>
+    <div class="subs-grid" id="subsGrid">
+      <div class="sub-card">
+        <div class="sub-head">
+          <div>
+            <div class="sub-title">SwagVpn &amp; VFG</div>
+            <div class="sub-id">SwagVpn · @svagoff_unofficial</div>
+          </div>
+          <div class="sub-badge"><span class="dot"></span><span>LIVE</span></div>
+        </div>
+        <p class="sub-desc">Бесплатная, совместная с @VFGsupport подписка.</p>
+        <div class="sub-url">https://gidroksi.fun/svagoff_unofficial/SwagVpn</div>
+        <div class="sub-actions">
+          <button class="btn btn-primary btn-sm" data-copy="https://gidroksi.fun/svagoff_unofficial/SwagVpn">⧉ Копировать URL</button>
+          <a href="happ://add/https://gidroksi.fun/svagoff_unofficial/SwagVpn" class="btn btn-ghost btn-sm">Открыть в Happ</a>
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <div class="sub-head">
+          <div>
+            <div class="sub-title">VFGVPN X HOLOSTVPN</div>
+            <div class="sub-id">VFGBPN · @VFGsupport</div>
+          </div>
+          <div class="sub-badge"><span class="dot"></span><span>LIVE</span></div>
+        </div>
+        <p class="sub-desc">Основная подписка от VFGsupport.</p>
+        <div class="sub-url">https://gidroksi.fun/VFGsupport/VFGBPN</div>
+        <div class="sub-actions">
+          <button class="btn btn-primary btn-sm" data-copy="https://gidroksi.fun/VFGsupport/VFGBPN">⧉ Копировать URL</button>
+          <a href="happ://add/https://gidroksi.fun/VFGsupport/VFGBPN" class="btn btn-ghost btn-sm">Открыть в Happ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install" style="background:var(--panel);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Как подключить</h2>
+      <p>Три клиента — три способа. Выбирай под своё устройство.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>V2rayNG <span class="plat">ANDROID</span></h3>
+        <ol>
+          <li>Открой приложение, нажми ☰ в левом верхнем углу.</li>
+          <li>Выбери пункт «Группы» в боковом меню.</li>
+          <li>Нажми ➕ для добавления новой подписки.</li>
+          <li>В поле URL вставь скопированную ссылку подписки.</li>
+          <li>Нажми 🔄 рядом с группой чтобы загрузить серверы.</li>
+        </ol>
+        <div class="warn">⚠ Включи «Разрешать незащищённые HTTP-адреса» — без этого подписка не загрузится.</div>
+      </div>
+
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Happ <span class="plat">IOS · ANDROID</span></h3>
+        <ol>
+          <li>Открой приложение, перейди во вкладку «Конфигурации».</li>
+          <li>Нажми ➕ в правом верхнем углу.</li>
+          <li>Выбери «Добавить подписку».</li>
+          <li>Вставь ссылку подписки в поле URL и нажми «Сохранить».</li>
+          <li>Нажми «Обновить» — серверы загрузятся автоматически.</li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Karing <span class="plat">ALL</span></h3>
+        <ol>
+          <li>Открой приложение, на главном экране нажми «+».</li>
+          <li>Выбери «Импорт из URL».</li>
+          <li>Вставь ссылку подписки и нажми «Импорт».</li>
+          <li>Выбери добавленную подписку и нажми «Подключиться».</li>
+        </ol>
+        <div class="warn">⚠ Если серверы не загрузились — отключи проверку сертификата (Skip TLS verify).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="channels">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Наши каналы</h2>
+      <p>Подпишись — там ключи появляются первыми.</p>
+    </div>
+    <div class="links-grid">
+      <div class="link-card">
+        <div class="lc-head">
+          <div class="lc-ico">📡</div>
+          <h3>SwagVpn</h3>
+        </div>
+        <p>Создатель бесплатной подписки. Основной канал с ключами и обновлениями.</p>
+        <a href="https://t.me/swagvipik" target="_blank" rel="noopener" class="btn btn-primary">Открыть канал</a>
+      </div>
+      <div class="link-card">
+        <div class="lc-head">
+          <div class="lc-ico">📡</div>
+          <h3>VFG Channel</h3>
+        </div>
+        <p>Обсуждение, поддержка, анонсы. Залетай в канал.</p>
+        <a href="https://t.me/+7eqdfilks0ZkZjIx" target="_blank" rel="noopener" class="btn btn-primary">Открыть канал</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" style="background:var(--panel);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Почему мы</h2>
+      <p>Подписки обновляются каждый день. Маленький пинг. Быстрые ключи. Бесплатно.</p>
+    </div>
+    <div class="features">
+      <div class="feat">
+        <div class="ico">🔄</div>
+        <h3>Обновление каждый день</h3>
+        <p>Ключи обновляются ежедневно. Свежие сервера, актуальные конфиги, никаких мёртвых узлов.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">⚡</div>
+        <h3>Маленький пинг</h3>
+        <p>Быстрые сервера с низкой задержкой. Для игр, стримов, работы — без тормозов.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">🚀</div>
+        <h3>Быстрые ключи</h3>
+        <p>VLESS, VMess, Trojan, SS, Hysteria2 — выбирай под свой сценарий.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">🎁</div>
+        <h3>Полностью бесплатно</h3>
+        <p>Никаких оплат, подписок, скрытых тарифов. Бесплатно — значит бесплатно.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">🛡️</div>
+        <h3>Без логов</h3>
+        <p>Не храним историю соединений. Что ты делаешь в сети — твоё дело.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">💬</div>
+        <h3>Поддержка</h3>
+        <p>Пиши @VFGsupport или @svagoff_unofficial — ответим, поможем, разберёмся.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="support">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Поддержка и донат</h2>
+      <p>Поможем с настройкой. А если хочешь поддержать проект — донат скоро.</p>
+    </div>
+    <div class="links-grid">
+      <div class="link-card">
+        <div class="lc-head">
+          <div class="lc-ico">💬</div>
+          <h3>@VFGsupport</h3>
+        </div>
+        <p>Основная поддержка. Вопросы по ключам, настройке, подключению.</p>
+        <a href="https://t.me/VFGsupport" target="_blank" rel="noopener" class="btn btn-primary">Написать</a>
+      </div>
+      <div class="link-card">
+        <div class="lc-head">
+          <div class="lc-ico">💬</div>
+          <h3>@svagoff_unofficial</h3>
+        </div>
+        <p>Второй контакт. Если первый не отвечает — пиши сюда.</p>
+        <a href="https://t.me/svagoff_unofficial" target="_blank" rel="noopener" class="btn btn-primary">Написать</a>
+      </div>
+      <div class="link-card">
+        <div class="lc-head">
+          <div class="lc-ico">💎</div>
+          <h3>Донат</h3>
+        </div>
+        <p>Поддержать проект. Реквизиты появятся здесь — coming soon.</p>
+        <a href="#" class="btn btn-ghost" style="cursor:not-allowed;opacity:.6">Coming soon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--panel);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Частые вопросы</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Как подключить подписку?</summary>
+        <p>Скопируй URL подписки кнопкой на сайте. Открой клиент (v2rayNG, Happ, Karing). Добавь подписку по URL. Обнови — серверы подтянутся сами. Инструкции для трёх клиентов выше на сайте.</p>
+      </details>
+      <details>
+        <summary>Какие протоколы поддерживаются?</summary>
+        <p>VLESS, VMess, Trojan, Shadowsocks (SS), Hysteria2. Все в одной подписке — клиент сам выберет подходящий.</p>
+      </details>
+      <details>
+        <summary>Подписки правда бесплатные?</summary>
+        <p>Да. Бесплатно — значит бесплатно. Живём за счёт донатов и поддержки сообщества.</p>
+      </details>
+      <details>
+        <summary>Как часто обновляются?</summary>
+        <p>Каждый день. Если сервер перестал работать — обнови подписку в клиенте или зайди в канал за свежей.</p>
+      </details>
+      <details>
+        <summary>Почему подписка не загружается?</summary>
+        <p>Две частые причины. V2rayNG — включи «Разрешать незащищённые HTTP-адреса» в настройках. Karing — отключи проверку сертификата (Skip TLS verify). Если не помогло — пиши в поддержку.</p>
+      </details>
+      <details>
+        <summary>Где взять клиент?</summary>
+        <p>Android — v2rayNG или Happ. iOS — Happ или Karing. Windows / macOS / Linux — Karing или Nekoray.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="strip">
+      <h2>Забирай подписку — подключайся</h2>
+      <p>Бесплатно, быстро, без логов. Обновление каждый день.</p>
+      <a href="#subs" class="btn btn-primary">Получить подписку</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:14px">
+          <span class="logo-mark">⚡</span>
+          <span>SWAG <b>VPN</b></span>
+        </div>
+        <p style="max-width:280px;font-size:13px">
+          Бесплатный впн от @VFGsupport, @svagoff_unofficial.
+        </p>
+      </div>
+      <div class="foot-col">
+        <h4>НАВИГАЦИЯ</h4>
+        <a href="#subs">Подписки</a>
+        <a href="#protocols">Протоколы</a>
+        <a href="#channels">Каналы</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>КОНТАКТЫ</h4>
+        <a href="https://t.me/VFGsupport" target="_blank" rel="noopener">@VFGsupport</a>
+        <a href="https://t.me/svagoff_unofficial" target="_blank" rel="noopener">@svagoff_unofficial</a>
+        <a href="https
